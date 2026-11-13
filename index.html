@@ -160,6 +160,14 @@
         .float-anim {
             animation: floatSlow 4s ease-in-out infinite;
         }
+        .pulse-dot {
+            animation: pulseRing 2s infinite;
+        }
+        @keyframes pulseRing {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
 
         /* ==========================================================================
            LOCKED 9:16 INSTAGRAM VIDEO VIEWPORT (Tampil Penuh & Proporsional 9:16)
@@ -229,34 +237,51 @@
             box-shadow: 0 20px 40px -12px rgba(245, 158, 11, 0.35), inset 0 0 0 3px #78350f;
             background: #1e293b;
         }
+
+        /* Optimasi Responsif Lintas Perangkat: HP, Tablet, Laptop, hingga IFP (Layar Interaktif Besar) */
+        @media (min-width: 1600px) {
+            .ifp-container {
+                max-width: 1560px !important;
+            }
+            .ifp-grid-4 {
+                grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            }
+        }
+        @media (max-width: 640px) {
+            .sedalas-9-16-frame {
+                max-width: 280px;
+            }
+        }
     </style>
 </head>
 <body class="playful-bg text-slate-800 antialiased selection:bg-sky-500 selection:text-white">
 
     <!-- Top Official Verification Bar -->
     <div class="bg-slate-900 text-white text-xs py-2.5 px-4 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+        <div class="max-w-7xl ifp-container mx-auto flex flex-wrap items-center justify-between gap-2">
             <div class="flex flex-wrap items-center gap-2">
-                <span class="bg-gradient-to-r from-amber-400 to-yellow-300 text-slate-950 font-display font-bold px-3 py-0.5 rounded-full text-[11px] shadow-sm flex items-center space-x-1">
-                    <i class="fa-solid fa-certificate text-amber-800"></i>
-                    <span>SK DIRSD NO. 9 TAHUN 2026 • URUTAN #40 NASIONAL</span>
-                </span>
+                <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
                 <span class="font-semibold text-slate-200">Portofolio Transformasi Karakter Sahabat Sekolah Dasar — SDN 011 Balikpapan Tengah (NPSN 30401660)</span>
             </div>
-            <div class="hidden md:flex items-center space-x-3 text-slate-300 font-medium text-xs">
-                <button onclick="openSkModal()" class="hover:text-amber-300 underline decoration-amber-400/60 underline-offset-4 transition-colors flex items-center space-x-1">
+            <div class="flex items-center space-x-3 text-slate-300 font-medium text-xs">
+                <button onclick="openVisitorModal()" class="hover:text-emerald-300 transition-colors flex items-center space-x-1.5 bg-emerald-500/15 border border-emerald-400/30 px-2.5 py-0.5 rounded-full text-emerald-300">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></span>
+                    <span>Pengunjung Riil: <strong id="topBarVisitorCount" class="font-bold text-white">...</strong></span>
+                </button>
+                <span class="hidden md:inline">•</span>
+                <button onclick="openSkModal()" class="hidden md:flex hover:text-amber-300 underline decoration-amber-400/60 underline-offset-4 transition-colors items-center space-x-1">
                     <i class="fa-solid fa-file-signature text-amber-400"></i>
                     <span>Lihat SK Penetapan Resmi</span>
                 </button>
-                <span>•</span>
-                <span class="bg-white/10 px-2.5 py-0.5 rounded-full text-sky-300">43 Aksi Nyata Terdokumentasi</span>
+                <span class="hidden md:inline">•</span>
+                <span class="hidden md:inline bg-white/10 px-2.5 py-0.5 rounded-full text-sky-300">43 Aksi Nyata Terdokumentasi</span>
             </div>
         </div>
     </div>
 
     <!-- Sticky Navigation Header with Large Logo -->
     <header class="sticky top-0 z-40 glass-nav border-b border-slate-200/80 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl ifp-container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between py-3 gap-4">
                 <!-- Brand Identity & Large Logo -->
                 <a href="#" onclick="switchMenu('semua')" class="flex items-center space-x-3.5 group shrink-0">
@@ -305,8 +330,14 @@
                     </button>
                 </nav>
 
-                <!-- Action Buttons -->
+                <!-- Action Buttons & Live Visitor Badge -->
                 <div class="flex items-center space-x-2">
+                    <!-- Live Visitor Pill Button -->
+                    <button onclick="openVisitorModal()" title="Lihat Detail Statistik Pengunjung Riil" class="hidden sm:flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-display font-bold transition-all shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 pulse-dot"></span>
+                        <span>Pengunjung Riil: <strong id="headerVisitorCount" class="font-extrabold text-emerald-950">...</strong></span>
+                    </button>
+
                     <button onclick="openQuizModal()" class="btn-3d bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-300 hover:to-orange-300 text-slate-950 font-display font-bold text-xs px-3.5 py-2.5 rounded-xl flex items-center space-x-1.5">
                         <i class="fa-solid fa-gamepad"></i>
                         <span class="hidden sm:inline">Kuis Sahabat SD</span>
@@ -344,8 +375,8 @@
     </header>
 
     <!-- HERO SECTION -->
-    <section class="hero-pattern text-white py-12 sm:py-16 lg:py-20 border-b-4 border-amber-400">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="hero-pattern text-white py-10 sm:py-14 lg:py-16 border-b-4 border-amber-400">
+        <div class="max-w-7xl ifp-container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
                 <!-- Left Column: Brand Showcase & Large Emblem -->
                 <div class="lg:col-span-7 space-y-6">
@@ -383,7 +414,7 @@
                         </a>
                         <button onclick="openVideoModal(1, 0)" class="btn-3d bg-white/15 hover:bg-white/25 text-white border border-white/30 font-display font-bold text-sm px-5 py-3.5 rounded-2xl flex items-center space-x-2 backdrop-blur-sm">
                             <span>🍿</span>
-                            <span>Bioskop Cilik 9:16</span>
+                            <span>Bioskop Cilik SEDALAS</span>
                         </button>
                         <button onclick="openSkModal()" class="btn-3d bg-slate-900/80 hover:bg-slate-900 text-amber-300 border border-amber-400/40 font-display font-bold text-sm px-5 py-3.5 rounded-2xl flex items-center space-x-2">
                             <i class="fa-solid fa-award"></i>
@@ -449,6 +480,29 @@
                                 Pelajari
                             </a>
                         </div>
+
+                        <!-- Live Real-Time Visitor Counter Strip inside Hero Card -->
+                        <div onclick="openVisitorModal()" class="cursor-pointer group bg-gradient-to-r from-slate-900 via-sky-950 to-emerald-950 text-white rounded-2xl p-3.5 border border-emerald-500/30 hover:border-emerald-400 transition-all shadow-md">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 pulse-dot"></span>
+                                    <span class="text-[11px] font-display font-bold uppercase tracking-wider text-emerald-300">Data Pengunjung Riil (Real-Time)</span>
+                                </div>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-semibold group-hover:bg-emerald-500 group-hover:text-slate-950 transition-colors">
+                                    Lihat Statistik <i class="fa-solid fa-chart-line ml-1"></i>
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2.5 pt-1 border-t border-white/10">
+                                <div class="bg-white/5 rounded-xl px-3 py-2 border border-white/10">
+                                    <p class="text-[10px] text-sky-200">Total Kunjungan</p>
+                                    <p id="heroTotalVisitors" class="font-display font-bold text-lg sm:text-xl text-white">...</p>
+                                </div>
+                                <div class="bg-white/5 rounded-xl px-3 py-2 border border-white/10">
+                                    <p class="text-[10px] text-sky-200">Kunjungan Hari Ini</p>
+                                    <p id="heroTodayVisitors" class="font-display font-bold text-lg sm:text-xl text-emerald-400">...</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -456,7 +510,7 @@
     </section>
 
     <!-- MAIN CONTENT CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-14">
+    <main class="max-w-7xl ifp-container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-12 sm:space-y-14">
 
         <!-- SECTION 1: interactive Portfolio Menu & 1-Paragraph Explanation -->
         <section id="portofolio-menu" class="space-y-6 scroll-mt-24">
@@ -469,7 +523,7 @@
                         Menu Implementasi Program Sahabat Sekolah Dasar
                     </h2>
                     <p class="text-xs sm:text-sm text-slate-600 mt-1">
-                        Pilih salah satu menu di bawah ini untuk membaca penjelasan singkat 1 paragraf beserta dokumentasi aksi nyata rasio 9:16.
+                        Pilih salah satu menu di bawah ini untuk membaca penjelasan singkat 1 paragraf beserta dokumentasi aksi nyata.
                     </p>
                 </div>
                 <button onclick="openCaturModal()" class="btn-3d bg-white hover:bg-sky-50 text-sky-800 border border-sky-200 font-display font-bold text-xs px-4 py-2.5 rounded-2xl flex items-center space-x-2 self-start md:self-auto">
@@ -549,70 +603,32 @@
                 </div>
             </div>
 
-            <!-- Search, Catur Pusat Filter & 9:16 Documentation View Switcher Bar -->
-            <div class="bg-slate-900 text-white p-4 sm:p-5 rounded-3xl shadow-xl border border-slate-800 space-y-4">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-center">
+            <!-- Search & Catur Pusat Filter Bar (Clean & Responsive for HP, Tablet, Laptop, and IFP) -->
+            <div class="bg-slate-900 text-white p-4 sm:p-5 rounded-3xl shadow-xl border border-slate-800">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 items-center">
                     <!-- Search Input -->
-                    <div class="lg:col-span-5 relative">
+                    <div class="md:col-span-7 lg:col-span-8 relative">
                         <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                        <input id="search-input" type="text" oninput="handleSearchAndFilter()" placeholder="Cari nama aksi nyata, peran murid, atau solusi..." class="w-full pl-10 pr-9 py-2.5 rounded-2xl bg-slate-800 text-white placeholder-slate-400 text-xs sm:text-sm border border-slate-700 focus:outline-none focus:border-amber-400">
-                        <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white">
+                        <input id="search-input" type="text" oninput="handleSearchAndFilter()" placeholder="Cari nama aksi nyata, peran murid, atau solusi..." class="w-full pl-11 pr-10 py-3 rounded-2xl bg-slate-800 text-white placeholder-slate-400 text-xs sm:text-sm border border-slate-700 focus:outline-none focus:border-amber-400 transition-colors">
+                        <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white">
                             <i class="fa-solid fa-circle-xmark"></i>
                         </button>
                     </div>
 
                     <!-- Catur Pusat Filter -->
-                    <div class="lg:col-span-3">
-                        <select id="catur-filter" onchange="handleSearchAndFilter()" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-800 text-white text-xs sm:text-sm border border-slate-700 focus:outline-none focus:border-amber-400">
-                            <option value="all">Semua Pilar Catur Pusat</option>
+                    <div class="md:col-span-5 lg:col-span-4">
+                        <select id="catur-filter" onchange="handleSearchAndFilter()" class="w-full px-4 py-3 rounded-2xl bg-slate-800 text-white text-xs sm:text-sm border border-slate-700 focus:outline-none focus:border-amber-400 transition-colors cursor-pointer">
+                            <option value="all">Semua Pilar Catur Pusat Pendidikan</option>
                             <option value="Sekolah">🏫 Pusat Sekolah</option>
                             <option value="Keluarga">👨‍👩‍👧‍👦 Pusat Keluarga</option>
                             <option value="Masyarakat">🤝 Masyarakat / Mitra Pemerintah</option>
                             <option value="Media">📱 Pusat Media</option>
                         </select>
                     </div>
-
-                    <!-- View Mode Switcher -->
-                    <div class="lg:col-span-4 flex flex-wrap items-center justify-end gap-1.5">
-                        <div class="flex items-center bg-slate-800 p-1 rounded-2xl border border-slate-700">
-                            <button id="view-mode-cards" onclick="setPortfolioViewMode('cards')" class="px-3.5 py-2 rounded-xl text-xs font-display font-bold transition-all bg-amber-400 text-slate-950 shadow-sm flex items-center space-x-1.5">
-                                <i class="fa-solid fa-grip"></i>
-                                <span>Katalog</span>
-                            </button>
-                            <button id="view-mode-studio" onclick="setPortfolioViewMode('studio')" class="px-3.5 py-2 rounded-xl text-xs font-display font-bold transition-all text-slate-200 hover:bg-white/10 flex items-center space-x-1.5">
-                                <i class="fa-solid fa-film"></i>
-                                <span>Studio 9:16</span>
-                            </button>
-                            <button id="view-mode-reels" onclick="setPortfolioViewMode('reels')" class="px-3.5 py-2 rounded-xl text-xs font-display font-bold transition-all text-slate-200 hover:bg-white/10 flex items-center space-x-1.5">
-                                <i class="fa-solid fa-mobile-screen"></i>
-                                <span>Galeri HP</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Frame Style Bar -->
-                <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800 text-xs">
-                    <div class="flex items-center space-x-2 text-slate-300">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>Bingkai Dokumentasi Video Terkunci di Rasio Vertikal <strong>9:16</strong> (Tanpa Terpotong)</span>
-                    </div>
-                    <div class="flex items-center space-x-1.5">
-                        <span class="text-slate-400 text-[11px] mr-1">Gaya Bingkai 9:16:</span>
-                        <button id="frame-btn-clean" onclick="setGlobalFrameStyle('clean')" class="frame-style-btn px-2.5 py-1.5 rounded-xl text-xs font-display font-bold bg-sky-500 text-white transition-all shadow-sm">
-                            ✨ Layar Bersih
-                        </button>
-                        <button id="frame-btn-phone" onclick="setGlobalFrameStyle('phone')" class="frame-style-btn px-2.5 py-1.5 rounded-xl text-xs font-display font-bold text-slate-200 hover:bg-white/10 transition-all">
-                            📱 Bingkai HP
-                        </button>
-                        <button id="frame-btn-tv" onclick="setGlobalFrameStyle('tv')" class="frame-style-btn px-2.5 py-1.5 rounded-xl text-xs font-display font-bold text-slate-200 hover:bg-white/10 transition-all">
-                            📺 TV Edukasi
-                        </button>
-                    </div>
                 </div>
             </div>
 
-            <!-- VIEW MODE 2: STUDIO SINEMA 9:16 (Split Screen Playlist & Locked 9:16 Player) -->
+            <!-- VIEW MODE 2: STUDIO SINEMA (Hidden by default) -->
             <div id="documentation-studio-view" class="hidden bg-white rounded-3xl border-2 border-slate-200 shadow-xl overflow-hidden">
                 <div class="grid grid-cols-1 lg:grid-cols-12">
                     <!-- Left: Locked 9:16 Video Mount -->
@@ -642,8 +658,8 @@
                 </div>
             </div>
 
-            <!-- VIEW MODE 1 & 3: CARDS GRID -->
-            <div id="programs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <!-- VIEW MODE 1 & 3: CARDS GRID (Responsive: 1 col HP, 2 cols Tablet, 3 cols Laptop, 4 cols IFP) -->
+            <div id="programs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ifp-grid-4 gap-5 sm:gap-6"></div>
 
             <!-- Empty State -->
             <div id="empty-state" class="hidden bg-white rounded-3xl p-12 text-center border border-slate-200 space-y-4">
@@ -827,26 +843,64 @@
 
     </main>
 
-    <!-- FOOTER WITH LARGE LOGO -->
+    <!-- FOOTER WITH LARGE LOGO & REAL-TIME VISITOR COUNTER WIDGET -->
     <footer class="bg-slate-950 text-slate-300 py-12 border-t-4 border-amber-400 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex items-center space-x-4">
-                <div class="w-20 h-20 rounded-2xl bg-white p-2 shadow-lg border-2 border-amber-400 shrink-0 flex items-center justify-center">
-                    <img src="https://wsrv.nl/?url=https://i.ibb.co/Gv45mJnN/Desain-tanpa-judul.png&output=png" 
-                         data-mirror-idx="0"
-                         onerror="handleLogoError(this)" 
-                         referrerpolicy="no-referrer"
-                         alt="Logo SEDALAS Footer" 
-                         class="w-full h-full object-contain">
+        <div class="max-w-7xl ifp-container mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4">
+                    <div class="w-20 h-20 rounded-2xl bg-white p-2 shadow-lg border-2 border-amber-400 shrink-0 flex items-center justify-center">
+                        <img src="https://wsrv.nl/?url=https://i.ibb.co/Gv45mJnN/Desain-tanpa-judul.png&output=png" 
+                             data-mirror-idx="0"
+                             onerror="handleLogoError(this)" 
+                             referrerpolicy="no-referrer"
+                             alt="Logo SEDALAS Footer" 
+                             class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-xl text-white">Sahabat Sekolah Dasar SEDALAS</h3>
+                        <p class="text-xs text-slate-400">SD Negeri 011 Balikpapan Tengah • NPSN 30401660</p>
+                        <p class="text-xs text-amber-300 font-semibold mt-1">SK Direktur Sekolah Dasar Nomor 9 Tahun 2026 (Urutan #40)</p>
+                        <p class="text-xs text-slate-400 mt-1">Portofolio Implementasi Penguatan Pendidikan Karakter & Budaya Sekolah Aman dan Nyaman</p>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="font-display font-bold text-xl text-white">Sahabat Sekolah Dasar SEDALAS</h3>
-                    <p class="text-xs text-slate-400">SD Negeri 011 Balikpapan Tengah • NPSN 30401660</p>
-                    <p class="text-xs text-amber-300 font-semibold mt-1">SK Direktur Sekolah Dasar Nomor 9 Tahun 2026 (Urutan #40)</p>
+
+                <!-- Visitor Counter Widget in Footer -->
+                <div class="lg:col-span-5">
+                    <div onclick="openVisitorModal()" class="cursor-pointer p-4 rounded-2xl bg-gradient-to-r from-slate-900 to-sky-950 border border-slate-800 hover:border-emerald-500/50 text-white shadow-lg transition-all">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[11px] font-display font-bold uppercase tracking-wider text-sky-200 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
+                                Pengunjung Riil (Live Counter)
+                            </span>
+                            <span class="text-[11px] text-amber-300 font-display font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-chart-line"></i> Detail Statistik
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 pt-2 border-t border-white/10">
+                            <div>
+                                <p class="text-[10px] text-slate-400">Total Kunjungan</p>
+                                <p id="sidebarTotalVisitors" class="font-display font-bold text-xl text-white">...</p>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400">Hari Ini</p>
+                                <p id="sidebarTodayVisitors" class="font-display font-bold text-xl text-emerald-400">...</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="text-xs text-slate-400 text-center md:text-right space-y-1">
-                <p>Portofolio Implementasi Penguatan Pendidikan Karakter & Budaya Sekolah Aman dan Nyaman</p>
+
+            <div class="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <a href="#" onclick="switchMenu('semua')" class="hover:text-amber-300 transition">Beranda</a>
+                    <span>•</span>
+                    <button onclick="openVisitorModal()" class="hover:text-emerald-300 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-users-viewfinder text-emerald-400"></i>
+                        <span>Statistik Pengunjung Real-Time</span>
+                    </button>
+                    <span>•</span>
+                    <button onclick="openSkModal()" class="hover:text-amber-300 transition">SK Penetapan 2026</button>
+                </div>
                 <p class="text-slate-500">© 2026 SDN 011 Balikpapan Tengah • Kota Balikpapan, Kalimantan Timur</p>
             </div>
         </div>
@@ -912,32 +966,32 @@
                             <div class="flex items-center gap-1 bg-white/10 p-1 rounded-xl border border-white/10">
                                 <button onclick="switchModalFrameStyle('clean')" class="modal-style-btn px-2 py-1 rounded-lg text-[11px] font-display font-bold bg-amber-400 text-slate-950 transition-all" data-style="clean">
                                     ✨ Bersih
-                                </button>
-                                <button onclick="switchModalFrameStyle('phone')" class="modal-style-btn px-2 py-1 rounded-lg text-[11px] font-display font-bold text-white hover:bg-white/10 transition-all" data-style="phone">
-                                    📱 HP
-                                </button>
-                                <button onclick="switchModalFrameStyle('tv')" class="modal-style-btn px-2 py-1 rounded-lg text-[11px] font-display font-bold text-white hover:bg-white/10 transition-all" data-style="tv">
-                                    📺 TV
-                                </button>
-                            </div>
+    <!-- MODAL 1: Activity Detail Modal (Fixed Height Layout - Tidak Terpotong & Responsif) -->
+    <div id="detail-modal" onclick="if(event.target === this) closeDetailModal()" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4">
+        <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[92vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200">
+            <!-- Modal Header (Sticky & Compact so Popup Never Gets Cut Off) -->
+            <div id="modal-header-bg" class="px-5 py-4 sm:px-7 sm:py-4 text-white relative shrink-0 flex items-center justify-between gap-4 border-b border-white/15">
+                <div class="min-w-0">
+                    <div class="flex flex-wrap items-center gap-2 mb-1">
+                        <span id="modal-no-badge" class="bg-white/20 backdrop-blur-sm px-2.5 py-0.5 rounded-full text-[11px] font-bold">Kegiatan #01</span>
+                        <span id="modal-cat-badge" class="bg-black/20 px-2.5 py-0.5 rounded-full text-[11px] font-semibold">Kategori</span>
+                    </div>
+                    <h3 id="modal-title" class="font-display font-bold text-lg sm:text-2xl leading-snug truncate">Nama Kegiatan</h3>
+                </div>
+                <button onclick="closeDetailModal()" class="w-10 h-10 rounded-2xl bg-black/25 hover:bg-rose-600 text-white flex items-center justify-center transition-all shrink-0" aria-label="Tutup">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
 
-                            <div class="flex items-center gap-1 bg-white/10 p-1 rounded-xl border border-white/10" title="Sesuaikan Tampilan Rasio 9:16">
-                                <button onclick="adjustCleanCrop('full')" class="crop-mode-btn px-2 py-1 rounded-lg text-[10px] font-display font-bold bg-sky-500 text-white transition-all" data-crop="full">
-                                    9:16 Penuh
-                                </button>
-                                <button onclick="adjustCleanCrop('focus')" class="crop-mode-btn px-2 py-1 rounded-lg text-[10px] font-display font-bold text-slate-200 hover:bg-white/10 transition-all" data-crop="focus">
-                                    Fokus Video
-                                </button>
-                                <button onclick="adjustCleanCrop('native')" class="crop-mode-btn px-2 py-1 rounded-lg text-[10px] font-display font-bold text-slate-200 hover:bg-white/10 transition-all" data-crop="native">
-                                    Utuh
-                                </button>
-                            </div>
-                        </div>
-
+            <!-- Modal Body (Scrollable Interior with Side-by-Side Video & Details) -->
+            <div class="p-4 sm:p-6 overflow-y-auto flex-1 min-h-0">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    <!-- Left Column: Video Player Box -->
+                    <div class="lg:col-span-5 bg-gradient-to-b from-slate-900 via-sky-950 to-slate-950 rounded-3xl p-4 border border-sky-400/30 shadow-xl text-white flex flex-col items-center space-y-3">
                         <!-- Reel Switcher if Activity has Multiple Videos -->
                         <div id="modal-reel-switcher" class="w-full flex flex-wrap justify-center gap-1.5 empty:hidden"></div>
 
-                        <!-- 9:16 Locked Stage Mount -->
+                        <!-- Locked Stage Mount -->
                         <div id="modal-video-stage" class="w-full flex justify-center"></div>
 
                         <!-- Prev / Next Activity Navigation -->
@@ -1023,7 +1077,7 @@
         </div>
     </div>
 
-    <!-- MODAL 4: Dedicated Kids Cinema Video Preview Modal (Bioskop Cilik SEDALAS - Locked 9:16 & Tidak Terpotong) -->
+    <!-- MODAL 4: Dedicated Kids Cinema Video Preview Modal (Bioskop Cilik SEDALAS) -->
     <div id="video-preview-modal" onclick="if(event.target === this) closeVideoModal()" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-4">
         <div class="bg-slate-900 rounded-3xl max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden shadow-2xl border-2 border-amber-400">
             <!-- Cinema Header (Sticky & Compact) -->
@@ -1035,25 +1089,12 @@
                     <div class="min-w-0">
                         <div class="flex items-center space-x-2">
                             <span id="cinema-badge" class="bg-white/15 text-amber-300 text-[11px] font-display font-bold px-2.5 py-0.5 rounded-full">Bioskop Cilik SEDALAS</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full font-bold">Rasio 9:16</span>
                         </div>
                         <h3 id="cinema-title" class="font-display font-bold text-base sm:text-xl leading-tight truncate mt-0.5">Pratinjau Video Kegiatan</h3>
                     </div>
                 </div>
 
                 <div class="flex items-center space-x-2 shrink-0">
-                    <!-- Style Switcher in Cinema Modal -->
-                    <div class="hidden sm:flex items-center gap-1 bg-white/10 p-1 rounded-xl border border-white/15">
-                        <button onclick="switchModalFrameStyle('clean')" class="modal-style-btn px-2 py-1 rounded-lg text-[11px] font-display font-bold bg-amber-400 text-slate-950 transition-all" data-style="clean">
-                            ✨ Bersih
-                        </button>
-                        <button onclick="switchModalFrameStyle('phone')" class="modal-style-btn px-2 py-1 rounded-lg text-[11px] font-display font-bold text-white hover:bg-white/10 transition-all" data-style="phone">
-                            📱 HP
-                        </button>
-                        <button onclick="switchModalFrameStyle('tv')" class="modal-style-btn px-2 py-1 rounded-lg text-[11px] font-display font-bold text-white hover:bg-white/10 transition-all" data-style="tv">
-                            📺 TV
-                        </button>
-                    </div>
                     <button onclick="closeVideoModal()" class="w-9 h-9 rounded-xl bg-white/15 hover:bg-rose-500 text-white flex items-center justify-center text-base transition-all" aria-label="Tutup Video">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
@@ -1062,20 +1103,8 @@
 
             <!-- Cinema Body (Scrollable Interior) -->
             <div class="p-4 sm:p-6 overflow-y-auto flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                <!-- Left: 9:16 Locked Video Stage -->
-                <div class="lg:col-span-6 flex flex-col items-center justify-center space-y-2.5">
-                    <div class="flex items-center gap-1 bg-white/10 p-1 rounded-xl border border-white/10">
-                        <span class="text-[10px] text-sky-200 px-2 font-bold">Mode 9:16:</span>
-                        <button onclick="adjustCleanCrop('full')" class="crop-mode-btn px-2.5 py-1 rounded-lg text-[10px] font-display font-bold bg-sky-500 text-white transition-all" data-crop="full">
-                            9:16 Penuh
-                        </button>
-                        <button onclick="adjustCleanCrop('focus')" class="crop-mode-btn px-2.5 py-1 rounded-lg text-[10px] font-display font-bold text-slate-200 hover:bg-white/10 transition-all" data-crop="focus">
-                            Fokus Video
-                        </button>
-                        <button onclick="adjustCleanCrop('native')" class="crop-mode-btn px-2.5 py-1 rounded-lg text-[10px] font-display font-bold text-slate-200 hover:bg-white/10 transition-all" data-crop="native">
-                            Utuh
-                        </button>
-                    </div>
+                <!-- Left: Video Stage -->
+                <div class="lg:col-span-6 flex flex-col items-center justify-center">
                     <div id="cinema-video-stage" class="w-full flex justify-center"></div>
                 </div>
 
@@ -1203,6 +1232,76 @@
                     </p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- MODAL 6: STATISTIK PENGUNJUNG RIIL (REAL-TIME) -->
+    <div id="visitorModal" onclick="if(event.target === this) closeVisitorModal()" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-md w-full p-6 shadow-2xl">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shadow-sm">
+                        <i class="fa-solid fa-users-viewfinder text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-base sm:text-lg text-slate-900">Data Pengunjung Riil (Real-Time)</h3>
+                        <p class="text-xs text-slate-500">Tercatat langsung dari akses nyata ke situs web SEDALAS</p>
+                    </div>
+                </div>
+                <button onclick="closeVisitorModal()" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-rose-100 hover:text-rose-600 flex items-center justify-center text-slate-500 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 my-5">
+                <div class="p-4 rounded-2xl bg-sky-50 border border-sky-200">
+                    <span class="text-xs text-sky-700 font-display font-bold">Total Kunjungan Riil</span>
+                    <p id="modalTotalVisitors" class="font-display font-bold text-2xl sm:text-3xl text-slate-900 mt-1">0</p>
+                    <span class="text-[11px] text-emerald-600 font-semibold"><i class="fa-solid fa-cloud-bolt mr-1"></i>Data Cloud Nyata</span>
+                </div>
+                <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200">
+                    <span class="text-xs text-emerald-700 font-display font-bold">Kunjungan Hari Ini</span>
+                    <p id="modalTodayVisitors" class="font-display font-bold text-2xl sm:text-3xl text-slate-900 mt-1">0</p>
+                    <span class="text-[11px] text-emerald-600 font-semibold"><i class="fa-solid fa-circle text-[8px] mr-1"></i>Real-Time Aktif</span>
+                </div>
+            </div>
+
+            <div class="space-y-2.5 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-500">Pengunjung Unik (Perangkat/User)</span>
+                    <span id="modalUniqueVisitors" class="font-display font-bold text-emerald-700">0 Pengguna</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-500">Kunjungan 7 Hari Terakhir</span>
+                    <span id="modalWeekVisitors" class="font-display font-bold text-slate-800">0 Kunjungan</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-500">Kunjungan Bulan Ini</span>
+                    <span id="modalMonthVisitors" class="font-display font-bold text-slate-800">0 Kunjungan</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-500">Waktu Akses Terakhir</span>
+                    <span id="sessionTimestamp" class="font-display font-bold text-sky-700">Baru saja</span>
+                </div>
+            </div>
+
+            <div class="mt-5 flex items-center gap-2.5">
+                <button onclick="refreshVisitorStats()" class="btn-3d flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-display font-bold flex items-center justify-center gap-1.5 transition">
+                    <i id="refreshVisitorIcon" class="fa-solid fa-arrows-rotate"></i>
+                    <span>Segarkan Data</span>
+                </button>
+                <button onclick="closeVisitorModal()" class="btn-3d flex-1 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-display font-bold transition">
+                    Tutup Statistik
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toastNotification" class="fixed bottom-5 right-5 z-50 hidden transform transition-all duration-300">
+        <div class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-slate-900 text-white shadow-xl border border-slate-700 text-xs font-display font-bold">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+            <span id="toastMessage">Data berhasil diperbarui!</span>
         </div>
     </div>
 
@@ -1970,7 +2069,7 @@
                     <div class="relative z-20 bg-slate-950/95 text-white px-3.5 py-2 border-t border-white/10 flex items-center justify-between gap-2 shrink-0">
                         <div class="min-w-0">
                             <div class="text-[9px] font-display font-bold text-amber-300 uppercase tracking-wider truncate">
-                                ★ Aksi Nyata #${String(item.id).padStart(2, '0')} • Rasio 9:16
+                                ★ Dokumentasi Aksi Nyata #${String(item.id).padStart(2, '0')}
                             </div>
                             <div class="text-[11px] font-display font-bold text-white truncate">${item.name}</div>
                         </div>
@@ -2887,6 +2986,9 @@
                 closeQuizModal();
                 closeCaturModal();
                 closeSkModal();
+                if (typeof window.closeVisitorModal === 'function') {
+                    window.closeVisitorModal();
+                }
             }
         });
 
@@ -2895,6 +2997,354 @@
             switchMenu('semua');
             renderSkSchoolsTable('');
         };
+    </script>
+
+    <!-- REAL-TIME CLOUD VISITOR COUNTER SCRIPT (Firebase Firestore + Dual External Cloud API Fallback) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        let db = null;
+        let auth = null;
+        let currentUser = null;
+        let hasRecordedVisitInSession = false;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'sdn011-balteng-sahabat-sd-sedalas';
+        const CLOUD_COUNTER_NAMESPACE = 'sdn011-balteng-sahabat-sd-sedalas';
+
+        let visitorStats = {
+            total: 0,
+            today: 0,
+            week: 0,
+            month: 0,
+            uniqueCount: 0,
+            lastVisit: 'Baru saja',
+            userId: '-'
+        };
+
+        // Helper Tanggal Lokal (YYYY-MM-DD)
+        function getDateKey(dateObj = new Date()) {
+            const year = dateObj.getFullYear();
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Helper Kunci Minggu (YYYY-Wxx) & Bulan (YYYY-MM) untuk Cloud Counter Eksternal
+        function getWeekKey(dateObj = new Date()) {
+            const d = new Date(Date.UTC(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate()));
+            const dayNum = d.getUTCDay() || 7;
+            d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+            const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+        }
+
+        function getMonthKey(dateObj = new Date()) {
+            const year = dateObj.getFullYear();
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            return `${year}-${month}`;
+        }
+
+        // Cloud Counter Publik untuk Deployment Eksternal (GitHub Pages / Google Sites / Web Hosting)
+        async function hitExternalCounterAPI(metricKey, shouldIncrement = true) {
+            const cleanKey = metricKey.replace(/[^a-zA-Z0-9_-]/g, '-');
+
+            // 1. Primary Cloud Counter API (CounterAPI v1 - CORS enabled)
+            try {
+                const endpoint = shouldIncrement
+                    ? `https://api.counterapi.dev/v1/${CLOUD_COUNTER_NAMESPACE}/${cleanKey}/up?t=${Date.now()}`
+                    : `https://api.counterapi.dev/v1/${CLOUD_COUNTER_NAMESPACE}/${cleanKey}/?t=${Date.now()}`;
+
+                const response = await fetch(endpoint, {
+                    method: 'GET',
+                    cache: 'no-store'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (typeof data.count === 'number') {
+                        return data.count;
+                    }
+                }
+            } catch (err) {
+                console.warn(`CounterAPI primary fallback (${cleanKey}):`, err);
+            }
+
+            // 2. Backup Cloud Counter API (Abacus Counter - CORS enabled)
+            try {
+                const action = shouldIncrement ? 'hit' : 'get';
+                const backupUrl = `https://abacus.jasoncameron.dev/${action}/${CLOUD_COUNTER_NAMESPACE}/${cleanKey}?t=${Date.now()}`;
+                const backupRes = await fetch(backupUrl, {
+                    method: 'GET',
+                    cache: 'no-store'
+                });
+
+                if (backupRes.ok) {
+                    const backupData = await backupRes.json();
+                    if (typeof backupData.value === 'number') {
+                        return backupData.value;
+                    }
+                }
+            } catch (backupErr) {
+                console.warn(`Abacus counter fallback (${cleanKey}):`, backupErr);
+            }
+
+            return null;
+        }
+
+        async function syncExternalCloudVisitors(shouldIncrement = false) {
+            const now = new Date();
+            const todayKey = getDateKey(now);
+            const weekKey = getWeekKey(now);
+            const monthKey = getMonthKey(now);
+            const nowFormatted = now.toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const [totalRes, todayRes, weekRes, monthRes] = await Promise.all([
+                hitExternalCounterAPI('total-kunjungan', shouldIncrement),
+                hitExternalCounterAPI(`harian-${todayKey}`, shouldIncrement),
+                hitExternalCounterAPI(`mingguan-${weekKey}`, shouldIncrement),
+                hitExternalCounterAPI(`bulanan-${monthKey}`, shouldIncrement)
+            ]);
+
+            const rawToday = todayRes ?? (visitorStats.today || 1);
+            const rawWeek = Math.max(weekRes ?? rawToday, rawToday);
+            const rawMonth = Math.max(monthRes ?? rawWeek, rawWeek);
+            const rawTotal = Math.max(totalRes ?? rawMonth, rawMonth);
+
+            visitorStats = {
+                total: rawTotal,
+                today: rawToday,
+                week: rawWeek,
+                month: rawMonth,
+                uniqueCount: rawTotal,
+                lastVisit: nowFormatted,
+                userId: visitorStats.userId && visitorStats.userId !== '-'
+                    ? visitorStats.userId
+                    : 'sedalas-visitor-' + Math.random().toString(36).substring(2, 10)
+            };
+
+            updateVisitorUI();
+        }
+
+        // Hitung statistik mingguan dan bulanan dari map harian riil
+        function computePeriodStats(dailyMap = {}) {
+            const now = new Date();
+            const todayKey = getDateKey(now);
+            const currentMonthPrefix = todayKey.slice(0, 7);
+
+            const last7DaysKeys = [];
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(now);
+                d.setDate(now.getDate() - i);
+                last7DaysKeys.push(getDateKey(d));
+            }
+
+            let todayCount = Number(dailyMap[todayKey] || 0);
+            let weekCount = 0;
+            let monthCount = 0;
+
+            Object.entries(dailyMap).forEach(([dateStr, count]) => {
+                const num = Number(count) || 0;
+                if (last7DaysKeys.includes(dateStr)) {
+                    weekCount += num;
+                }
+                if (dateStr.startsWith(currentMonthPrefix)) {
+                    monthCount += num;
+                }
+            });
+
+            return { todayCount, weekCount, monthCount };
+        }
+
+        // Inisialisasi Firebase & Pencatatan Pengunjung Riil
+        async function initRealTimeSystem() {
+            const nowFormatted = new Date().toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            try {
+                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                    const firebaseConfig = JSON.parse(__firebase_config);
+                    const app = initializeApp(firebaseConfig);
+                    auth = getAuth(app);
+                    db = getFirestore(app);
+
+                    // RULE 3: Auth Before Queries
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+
+                    currentUser = auth.currentUser;
+                    if (!currentUser) return;
+
+                    visitorStats.userId = currentUser.uid;
+
+                    // Referensi dokumen counter pengunjung riil (RULE 1: Strict Path)
+                    const statsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'visitor_stats', 'real_counter');
+
+                    if (!hasRecordedVisitInSession) {
+                        hasRecordedVisitInSession = true;
+                        const snap = await getDoc(statsDocRef);
+                        const todayKey = getDateKey();
+
+                        let total = 1;
+                        let daily = { [todayKey]: 1 };
+                        let uniqueUsers = [currentUser.uid];
+
+                        if (snap.exists()) {
+                            const data = snap.data();
+                            total = (Number(data.total) || 0) + 1;
+                            daily = data.daily && typeof data.daily === 'object' ? { ...data.daily } : {};
+                            daily[todayKey] = (Number(daily[todayKey]) || 0) + 1;
+
+                            uniqueUsers = Array.isArray(data.uniqueUsers) ? [...data.uniqueUsers] : [];
+                            if (!uniqueUsers.includes(currentUser.uid)) {
+                                uniqueUsers.push(currentUser.uid);
+                            }
+                        }
+
+                        await setDoc(statsDocRef, {
+                            total,
+                            daily,
+                            uniqueUsers,
+                            lastVisit: nowFormatted,
+                            updatedAt: Date.now()
+                        });
+                    }
+
+                    // Dengarkan perubahan jumlah pengunjung secara real-time
+                    onSnapshot(
+                        statsDocRef,
+                        (docSnap) => {
+                            if (docSnap.exists()) {
+                                const data = docSnap.data();
+                                const dailyMap = data.daily || {};
+                                const { todayCount, weekCount, monthCount } = computePeriodStats(dailyMap);
+                                const uniqueArr = Array.isArray(data.uniqueUsers) ? data.uniqueUsers : [];
+
+                                visitorStats = {
+                                    total: Number(data.total) || 1,
+                                    today: todayCount,
+                                    week: weekCount,
+                                    month: monthCount,
+                                    uniqueCount: uniqueArr.length || 1,
+                                    lastVisit: data.lastVisit || nowFormatted,
+                                    userId: currentUser.uid
+                                };
+                                updateVisitorUI();
+                            }
+                        },
+                        (err) => {
+                            console.error('Gagal memuat stream statistik pengunjung:', err);
+                        }
+                    );
+                } else {
+                    if (!hasRecordedVisitInSession) {
+                        hasRecordedVisitInSession = true;
+                        await syncExternalCloudVisitors(true);
+                    } else {
+                        await syncExternalCloudVisitors(false);
+                    }
+
+                    setInterval(() => {
+                        syncExternalCloudVisitors(false);
+                    }, 30000);
+                }
+            } catch (error) {
+                console.error('Inisialisasi statistik pengunjung beralih ke Cloud Counter Publik:', error);
+                await syncExternalCloudVisitors(!hasRecordedVisitInSession);
+                hasRecordedVisitInSession = true;
+            }
+        }
+
+        function updateVisitorUI() {
+            const formattedTotal = visitorStats.total.toLocaleString('id-ID');
+            const formattedToday = visitorStats.today.toLocaleString('id-ID');
+            const formattedWeek = visitorStats.week.toLocaleString('id-ID');
+            const formattedMonth = visitorStats.month.toLocaleString('id-ID');
+            const formattedUnique = visitorStats.uniqueCount.toLocaleString('id-ID');
+
+            const topBarCountEl = document.getElementById('topBarVisitorCount');
+            const headerCountEl = document.getElementById('headerVisitorCount');
+            const heroTotalEl = document.getElementById('heroTotalVisitors');
+            const heroTodayEl = document.getElementById('heroTodayVisitors');
+            const sidebarTotalEl = document.getElementById('sidebarTotalVisitors');
+            const sidebarTodayEl = document.getElementById('sidebarTodayVisitors');
+            const modalTotalEl = document.getElementById('modalTotalVisitors');
+            const modalTodayEl = document.getElementById('modalTodayVisitors');
+            const modalUniqueEl = document.getElementById('modalUniqueVisitors');
+            const modalWeekEl = document.getElementById('modalWeekVisitors');
+            const modalMonthEl = document.getElementById('modalMonthVisitors');
+            const sessionTimeEl = document.getElementById('sessionTimestamp');
+
+            if (topBarCountEl) topBarCountEl.textContent = formattedTotal;
+            if (headerCountEl) headerCountEl.textContent = formattedTotal;
+            if (heroTotalEl) heroTotalEl.textContent = formattedTotal;
+            if (heroTodayEl) heroTodayEl.textContent = '+' + formattedToday;
+            if (sidebarTotalEl) sidebarTotalEl.textContent = formattedTotal;
+            if (sidebarTodayEl) sidebarTodayEl.textContent = '+' + formattedToday;
+            if (modalTotalEl) modalTotalEl.textContent = formattedTotal;
+            if (modalTodayEl) modalTodayEl.textContent = formattedToday;
+            if (modalUniqueEl) modalUniqueEl.textContent = `${formattedUnique} Pengguna`;
+            if (modalWeekEl) modalWeekEl.textContent = `${formattedWeek} Kunjungan`;
+            if (modalMonthEl) modalMonthEl.textContent = `${formattedMonth} Kunjungan`;
+            if (sessionTimeEl) sessionTimeEl.textContent = visitorStats.lastVisit;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            const msgEl = document.getElementById('toastMessage');
+            if (!toast || !msgEl) return;
+            msgEl.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+
+        async function refreshVisitorStats() {
+            const icon = document.getElementById('refreshVisitorIcon');
+            if (icon) icon.classList.add('fa-spin');
+            try {
+                if (typeof __firebase_config === 'undefined' || !__firebase_config) {
+                    await syncExternalCloudVisitors(false);
+                }
+                showToast('Data statistik pengunjung berhasil disegarkan!');
+            } finally {
+                if (icon) setTimeout(() => icon.classList.remove('fa-spin'), 500);
+            }
+        }
+
+        function openVisitorModal() {
+            const modal = document.getElementById('visitorModal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeVisitorModal() {
+            const modal = document.getElementById('visitorModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        window.openVisitorModal = openVisitorModal;
+        window.closeVisitorModal = closeVisitorModal;
+        window.refreshVisitorStats = refreshVisitorStats;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initRealTimeSystem();
+        });
     </script>
 </body>
 </html>
